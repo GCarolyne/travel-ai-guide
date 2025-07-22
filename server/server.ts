@@ -41,33 +41,7 @@ app.post("/api/response", async (req, res, next) => {
   }
 });
 
-app.post("/api/custom-guide", async (req, res, next) => {
-  try {
-    const { city, budget, interests, duration = 3 } = req.body;
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-2024-05-13",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a personalized travel guide who creates custom itineraries based on specific preferences.",
-        },
-        {
-          role: "user",
-          content: `Create a ${duration}-day travel guide for ${city}. Budget: ${budget}. Interests: ${interests?.join(
-            ", "
-          )}. Focus on authentic experiences.`,
-        },
-      ],
-    });
-
-    res.json({ result: response.choices[0].message.content });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-});
 
 /*
  * Handles paths that aren't handled by any other route handler.
